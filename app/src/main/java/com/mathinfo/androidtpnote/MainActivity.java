@@ -7,10 +7,15 @@ import com.mathinfo.androidtpnote.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import com.mathinfo.androidtpnote.databinding.ContentMainBinding;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private ContentMainBinding contentMainBinding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        contentMainBinding = binding.main;
 
         setSupportActionBar(binding.toolbar);
 
