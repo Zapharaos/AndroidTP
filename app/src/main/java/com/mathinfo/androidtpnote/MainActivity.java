@@ -7,6 +7,13 @@ import com.mathinfo.androidtpnote.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.mathinfo.androidtpnote.databinding.ContentMainBinding;
 
 import java.util.Random;
@@ -15,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private ContentMainBinding contentMainBinding;
+
+    private int answer = -1;
 
 
     @Override
@@ -31,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
         binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
+
+        Button generateButton = findViewById(R.id.startButton);
+        generateButton.setOnClickListener(v -> start());
+
+        Button answerButton = findViewById(R.id.answerButton);
+        answerButton.setOnClickListener(v -> answer());
     }
 
     @Override
@@ -53,6 +68,89 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void start() {
+        EditText editTextValue = findViewById(R.id.editTextValue);
+        int value = Integer.parseInt(editTextValue.getText().toString());
+        answer  = new Random().nextInt(value + 1);
+        Log.d("Answer", "Generated random number: " + answer);
+        hideStartForm();
+        showGameForm();
+    }
+
+    private void answer() {
+        EditText editTextGuess = findViewById(R.id.editTextGuess);
+        int value = Integer.parseInt(editTextGuess.getText().toString());
+        Log.d("Input", "Input number: " + value);
+
+        TextView resultTextView = findViewById(R.id.resultTextView);
+        ImageView imageView = findViewById(R.id.imageView);
+
+        if (value == answer) {
+            Log.d("Resultat", "Victoire");
+            hideGameForm();
+            showStartForm();
+            imageView.setVisibility(View.VISIBLE);
+        } else if (value < answer) {
+            resultTextView.setText(getString(R.string.more));
+            imageView.setVisibility(View.GONE);
+            Log.d("Resultat", "Plus");
+        } else {
+            resultTextView.setText(getString(R.string.less));
+            imageView.setVisibility(View.GONE);
+            Log.d("Resultat", "Moins");
+        }
+    }
+
+    // utiliser deux layouts differents a la place
+
+    private void hideStartForm() {
+        TextView textViewValue = findViewById(R.id.textViewValue);
+        EditText editTextValue = findViewById(R.id.editTextValue);
+        Button startButton = findViewById(R.id.startButton);
+        ImageView imageView = findViewById(R.id.imageView);
+
+        textViewValue.setVisibility(View.GONE);
+        editTextValue.setVisibility(View.GONE);
+        startButton.setVisibility(View.GONE);
+        imageView.setVisibility(View.GONE);
+    }
+
+    private void showStartForm() {
+        TextView textViewValue = findViewById(R.id.textViewValue);
+        EditText editTextValue = findViewById(R.id.editTextValue);
+        Button startButton = findViewById(R.id.startButton);
+
+        textViewValue.setVisibility(View.VISIBLE);
+        editTextValue.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.VISIBLE);
+        editTextValue.setText("");
+    }
+
+    private void hideGameForm() {
+        TextView textViewGuess = findViewById(R.id.textViewGuess);
+        EditText editTextGuess = findViewById(R.id.editTextGuess);
+        Button answerButton = findViewById(R.id.answerButton);
+        TextView resultTextView = findViewById(R.id.resultTextView);
+
+        textViewGuess.setVisibility(View.GONE);
+        editTextGuess.setVisibility(View.GONE);
+        answerButton.setVisibility(View.GONE);
+        resultTextView.setVisibility(View.GONE);
+    }
+
+    private void showGameForm() {
+        TextView textViewGuess = findViewById(R.id.textViewGuess);
+        EditText editTextGuess = findViewById(R.id.editTextGuess);
+        Button answerButton = findViewById(R.id.answerButton);
+        TextView resultTextView = findViewById(R.id.resultTextView);
+
+        textViewGuess.setVisibility(View.VISIBLE);
+        editTextGuess.setVisibility(View.VISIBLE);
+        answerButton.setVisibility(View.VISIBLE);
+        resultTextView.setVisibility(View.VISIBLE);
+        editTextGuess.setText("");
     }
 
 }

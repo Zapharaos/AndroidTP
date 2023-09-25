@@ -9,4 +9,11 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="x">X =</string>
+    <string name="d_marrer_le_jeu">Démarrer le jeu</string>
+    <string name="saisie_joueur">Saisie joueur :</string>
+    <string name="valider">Valider</string>
+    <string name="more">C\'est plus !</string>
+    <string name="less">C\'est moins !</string>
 </resources>
